@@ -1,9 +1,9 @@
 import requests
-def get_weather(countary):
+def get_weather(country):
   gurl="https://geocoding-api.open-meteo.com/v1/search"#this api is no longer working : https://restcountries.com/v3.1/name/{city}
 
   try:
-    geo= requests.get(gurl,params={"name":countary,"count":1},timeout=5)
+    geo= requests.get(gurl,params={"name":country,"count":1},timeout=5)
     geo.raise_for_status()
     # lat = geo.json()[0]["latlng"] # wrong method its a list with 2 value fist is lat 2nd is ling with
     # lon = geo.json()[1]["latlng"] # index 1 here it searches for 2nd countraries value 
@@ -30,14 +30,18 @@ def get_joke():
 print("#### -      WELCOME    - ###")
 print("#### -To Weather Status- ####")
 print("#### -      Finde      - ####")
-cname=input("Enter the name of the countary you would like to know weather about:")
-result = get_weather(cname)
+#Editing adding while true 
+while True:
+  cname=input("Enter the name of the country you would like to know weather about (or q to quit):")
+  if cname.lower() == "q":
+    break
+  result = get_weather(cname)
 
-if result:
+  if result:
     print(f"Temperature: {result['temp']}°C")
     print(f"Wind Speed : {result['wind']} km/h")
-else:
+  else:
     print("Could not get weather data.")
 
-print("Here's a Free complimentary joke")
-print(get_joke())
+  print("Here's a Free complimentary joke")
+  print(get_joke())
